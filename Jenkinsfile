@@ -21,7 +21,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-                sh "docker build --name duncanapi -t vimuens/translateapi ."
+                sh "docker build -t vimuens/translateapi ."
+                sh "docker run -d --name duncanapi vimuens/translateapi"
                 sh "docker stop duncanapi"
                 sh "docker start duncanapi"
             }
