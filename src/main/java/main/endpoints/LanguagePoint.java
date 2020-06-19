@@ -19,7 +19,7 @@ import java.util.List;
 @Path("/language")
 public class LanguagePoint {
 
-    final Session session = HibernateUtil.getHibernateSession();
+    final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
     @GET
     @Path("/getall")

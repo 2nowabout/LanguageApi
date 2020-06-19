@@ -24,7 +24,7 @@ import java.util.List;
 @Path("/auth")
 public class AuthenticationPoint {
 
-    final Session session = HibernateUtil.getHibernateSession();
+    final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
     @POST
     @Path("/login")

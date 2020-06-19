@@ -18,7 +18,7 @@ import java.util.List;
 @Path("/assignment")
 public class AssignmentPoint {
 
-    final Session session = HibernateUtil.getHibernateSession();
+    final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
     @GET
     @Path("/getall")

@@ -2,19 +2,22 @@ package main;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import java.io.File;
 
 public class HibernateUtil {
 
-    final Session session = HibernateUtil.getHibernateSession();
+    private static SessionFactory sessionFactory ;
 
-    public static Session getHibernateSession() {
-        final SessionFactory sf = new Configuration()
-                .configure(new File("main/hibernate.cfg.xml")).buildSessionFactory();
-        // factory = new Configuration().configure().buildSessionFactory();
-        final Session session = sf.openSession();
-        return session;
+    static {
+        Configuration configuration = new Configuration().configure();
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+        sessionFactory = configuration.buildSessionFactory(builder.build());
+        sessionFactory.openSession();
+    }
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
