@@ -3,6 +3,9 @@ plugins {
 }
 
 jar {
+    into 'resources', {
+        from 'resources'
+    }
     manifest {
         attributes(
                 'Main-Class': 'main.Start'
