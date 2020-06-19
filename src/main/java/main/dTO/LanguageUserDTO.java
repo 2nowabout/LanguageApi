@@ -1,15 +1,17 @@
 package main.dTO;
 
+import main.models.Language;
+
 public class LanguageUserDTO {
-    private LanguageDTO languageDTO;
+    private Language language;
     private int userId;
 
-    public LanguageDTO getLanguageDTO() {
-        return languageDTO;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setLanguageDTO(LanguageDTO languageDTO) {
-        this.languageDTO = languageDTO;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public int getUserId() {

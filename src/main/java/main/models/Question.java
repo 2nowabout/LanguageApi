@@ -1,15 +1,23 @@
 package main.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Question", schema = "language")
+@Table(name = "Question", schema = "languages")
 public class Question {
     private int uniqueId;
+
+    @JsonBackReference
     private Lesson lessonId;
+
     private String question;
+
+    @JsonManagedReference
     private Collection<Answer> answers;
 
     @Id
@@ -23,7 +31,7 @@ public class Question {
         this.uniqueId = uniqueId;
     }
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "lessonId", referencedColumnName = "uniqueId")
     public Lesson getLessonId() {
         return lessonId;

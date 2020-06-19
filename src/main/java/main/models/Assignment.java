@@ -7,13 +7,18 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Assignment", schema = "language")
+@Table(name = "Assignment", schema = "languages")
 public class Assignment {
     private int uniqueId;
     private String title;
-    private Language languageId;
+
+    @JsonBackReference
+    private Language language;
+
     private String pictureName;
     private String description;
+
+    @JsonManagedReference
     private List<Lesson> lessons;
 
     @Id
@@ -37,15 +42,14 @@ public class Assignment {
         this.title = title;
     }
 
-    @JsonBackReference
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "languageId", referencedColumnName = "uniqueId")
-    public Language getLanguageId() {
-        return languageId;
+    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "language", referencedColumnName = "uniqueId")
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setLanguageId(Language languageId) {
-        this.languageId = languageId;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     @Basic
@@ -68,7 +72,6 @@ public class Assignment {
         this.description = description;
     }
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "assignmentId")
     public List<Lesson> getLessons() {
         return lessons;

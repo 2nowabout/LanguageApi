@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.ws.rs.Consumes;
 
 @Entity
-@Table(name = "User", schema = "language")
+@Table(name = "User", schema = "languages")
 public class User {
     private int userId;
     private String username;
@@ -69,7 +69,7 @@ public class User {
         this.password = password;
     }
 
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    @OneToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "chosenLanguage", referencedColumnName = "uniqueId")
     public Language getChosenLanguage() {
         return chosenLanguage;

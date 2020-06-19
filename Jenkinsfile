@@ -21,10 +21,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-                sh "docker build -t vimuens/translateapi ."
-                sh "docker run -d --name duncanapi vimuens/translateapi"
                 sh "docker stop duncanapi"
-                sh "docker start duncanapi"
+                sh "docker build -t vimuens/translateapi:${BUILD_NUMBER} ."
+                sh "docker tag vimuens/translateapi:${BUILD_NUMBER} vimuens/translateapi:latest"
+                sh "docker rm --force duncanapi"
+                sh "docker run -d --name duncanapi -p 8086:8020 vimuens/translateapi:latest"
             }
         }
     }

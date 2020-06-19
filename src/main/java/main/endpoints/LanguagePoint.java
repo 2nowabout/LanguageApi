@@ -51,7 +51,7 @@ public class LanguagePoint {
         try {
             Transaction tx = session.beginTransaction();
             User user = session.load(User.class, dto.getUserId());
-            Language language = session.load(Language.class, dto.getLanguageDTO().getUniqueId());
+            Language language = session.load(Language.class, dto.getLanguage().getUniqueId());
             user.setChosenLanguage(language);
             /*session.get(Language.class, "*");*/
             tx.commit();

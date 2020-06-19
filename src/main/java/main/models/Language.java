@@ -1,17 +1,23 @@
 package main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Language", schema = "language")
+@Table(name = "Language", schema = "languages")
 public class Language {
     private int uniqueId;
     private String name;
     private String pictureName;
+
+    @JsonManagedReference
     private List<Assignment> assignments;
+
+    @JsonBackReference
+    private User user;
 
     @Id
     @Column(name = "uniqueId")
@@ -44,13 +50,21 @@ public class Language {
         this.pictureName = pictureName;
     }
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "languageId")
+    @OneToMany(mappedBy = "language", fetch = FetchType.EAGER)
     public List<Assignment> getAssignments() {
         return assignments;
     }
 
     public void setAssignments(List<Assignment> assignments) {
         this.assignments = assignments;
+    }
+
+    @OneToOne(mappedBy = "chosenLanguage", optional = false, fetch = FetchType.LAZY)
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

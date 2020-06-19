@@ -1,6 +1,7 @@
 package main.endpoints;
 
 import main.HibernateUtil;
+import main.dTO.SelectLessonDTO;
 import main.helpers.RestResponseHelper;
 import main.models.Assignment;
 import main.models.Language;
@@ -9,10 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -24,17 +22,17 @@ public class AssignmentPoint {
 
     @GET
     @Path("/getall")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllAssignments(int languageID)
+    public Response getAllAssignments(@QueryParam("id") int language)
     {
         try {
             Transaction tx = session.beginTransaction();
-            /*session.get(Language.class, "*");*/
-            Query query = session.createQuery("SELECT * FROM Assignment where languageId = " + languageID);
-            List<Assignment> requested = query.getResultList();
+            Query query = session.createQuery("SELECT a FROM Language a WHERE a.uniqueId = :id");
+            query.setParameter("id", language);
+            List<Language> requested = query.getResultList();
+            List<Assignment> actual = requested.get(0).getAssignments();
             tx.commit();
-            return Response.status(200).entity(requested).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Origin", "*").build();
+            return Response.status(200).entity(actual).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Origin", "*").build();
         }
         catch (Exception e)
         {
@@ -45,15 +43,15 @@ public class AssignmentPoint {
 
     @GET
     @Path("/selectAssignment")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response selectAssignment(int assignmentID)
+    public Response selectAssignment(@QueryParam("assignmentid") int assignmentid, @QueryParam("lessonid") int lessonid)
     {
         try {
             Transaction tx = session.beginTransaction();
             /*session.get(Language.class, "*");*/
-            Query query = session.createQuery("SELECT * FROM Lesson where assignmentId = " + assignmentID);
-            List<Lesson> requested = query.getResultList();
+            Query query = session.createQuery("SELECT a FROM Assignment a where a.uniqueId = " + assignmentid);
+            List<Assignment> requested = query.getResultList();
+
             tx.commit();
             return Response.status(200).entity(requested).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Origin", "*").build();
         }

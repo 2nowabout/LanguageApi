@@ -4,7 +4,7 @@ package main.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CommunityFeedback", schema = "language")
+@Table(name = "CommunityFeedback", schema = "languages")
 public class CommunityFeedback {
     private int uniqueId;
 

@@ -1,13 +1,17 @@
 package main.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.persistence.Id;
 
 @Entity
-@Table(name = "Answer", schema = "language")
+@Table(name = "Answer", schema = "languages")
 public class Answer {
     private int uniqueId;
     private String answer;
+
+    @JsonBackReference
     private Question questionId;
 
     @Id
