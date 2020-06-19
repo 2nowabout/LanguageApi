@@ -8,6 +8,7 @@ jar {
                 'Main-Class': 'main.Start'
         )
     }
+    from{ configurations.runtime.collect {it.isDirectory() ? it : zipTree(it)}}
 }
 
 group 'nl.martinduncan'
@@ -18,26 +19,8 @@ sourceCompatibility = 1.8
 apply plugin: 'application'
 mainClassName = "main.Start"
 
-task fatJar(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Jar File Example',
-                'Implementation-Version': version,
-                'Main-Class': 'main.Start'
-    }
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
-
 repositories {
     mavenCentral()
-}
-sourceSets {
-    java {
-        main {
-            output.resourcesDir = java.outputDir
-        }
-    }
 }
 
 dependencies {
