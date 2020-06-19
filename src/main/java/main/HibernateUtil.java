@@ -11,10 +11,8 @@ public class HibernateUtil {
     final Session session = HibernateUtil.getHibernateSession();
 
     public static Session getHibernateSession() {
-
         final SessionFactory sf = new Configuration()
-                .configure(new File("src/hibernate.cfg.xml")).buildSessionFactory();
-
+                .configure(new File("main/hibernate.cfg.xml")).buildSessionFactory();
         // factory = new Configuration().configure().buildSessionFactory();
         final Session session = sf.openSession();
         return session;
