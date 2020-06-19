@@ -5,9 +5,9 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <!--        <property name="hibernate.connection.url">jdbc:mysql://185.5.52.135:3306/Bioscoop1?useSSL=false</property>-->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/languages</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password"></property>
+        <property name="hibernate.connection.url">jdbc:mysql://172.17.0.2:3306/languages</property>
+        <property name="connection.username">translateuser</property>
+        <property name="connection.password">7%egU6YX%UR%UrY</property>
         <property name="hbm2ddl.auto">update</property>
         <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.current_session_context_class">thread</property>
